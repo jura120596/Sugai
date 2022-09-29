@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16sp"
+    android:layout_marginTop="8sp"
+    android:layout_marginEnd="16sp"
+    android:background="@drawable/gray_rounded_block"
+    android:paddingStart="16sp"
+    android:paddingTop="8sp"
+    android:paddingEnd="16sp"
+    android:clickable="true"
+    android:paddingBottom="8sp"
+    app:srcCompat="@drawable/gray_rounded_block"
+    tools:visibility="visible"
+    android:id="@+id/requests_type_recycler_item"
+    android:focusable="true">
+
+
+    <TextView
+        android:id="@+id/from_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/velasans_semibold"
+        android:text="Петр Петрович"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:fontFamily="@font/vela_sans_bold"
+        android:paddingEnd="5sp"
+        android:text="Тип обращения:"
+        android:textColor="@color/gray_rounded_block_stroke"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/from_name" />
+
+    <TextView
+        android:id="@+id/type_name"
+        android:layout_width="wrap_content"
+        android:maxWidth="150sp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/velasans_extralight"
+        android:layout_marginTop="1dp"
+        android:text="Тип обращения: Тп обращения:Т ип обращения:Т ип обращени я:Тип обращения:Тип обращения:"
+        android:textColor="@color/accept"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/textView16"
+        app:layout_constraintTop_toBottomOf="@+id/from_name" />
+<!--    address-->
+    <TextView
+        android:id="@+id/adr_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:fontFamily="@font/vela_sans_bold"
+        android:paddingEnd="5sp"
+        android:visibility="gone"
+        android:text="Адрес:"
+        android:textColor="@color/gray_rounded_block_stroke"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/type_name" />
+
+    <TextView
+        android:id="@+id/address_name"
+        android:layout_width="wrap_content"
+        android:maxWidth="150sp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/velasans_extralight"
+        android:layout_marginTop="1dp"
+        android:text="улица мурзываны"
+        android:textColor="@color/accept"
+        android:visibility="gone"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/adr_label"
+        app:layout_constraintTop_toBottomOf="@+id/type_name" />
+
+<!--    email-->
+
+    <TextView
+        android:id="@+id/email_lbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:fontFamily="@font/vela_sans_bold"
+        android:paddingEnd="5sp"
+        android:visibility="gone"
+        android:text="Email:"
+        android:textColor="@color/gray_rounded_block_stroke"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/address_name" />
+
+    <TextView
+        android:id="@+id/email_tv"
+        android:layout_width="wrap_content"
+        android:maxWidth="150sp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/velasans_extralight"
+        android:layout_marginTop="1dp"
+        android:text="helloworld@mail.ru"
+        android:textColor="@color/accept"
+        android:visibility="gone"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/email_lbl"
+        app:layout_constraintTop_toBottomOf="@+id/address_name" />
+<!--    email-->
+
+    <TextView
+        android:id="@+id/phone_lbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:fontFamily="@font/vela_sans_bold"
+        android:paddingEnd="5sp"
+        android:visibility="gone"
+        android:text="Телефон:"
+        android:textColor="@color/gray_rounded_block_stroke"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_tv" />
+
+    <TextView
+        android:id="@+id/phone_tv"
+        android:layout_width="wrap_content"
+        android:maxWidth="150sp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/velasans_extralight"
+        android:layout_marginTop="1dp"
+        android:text="+79283893983"
+        android:textColor="@color/accept"
+        android:visibility="gone"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/phone_lbl"
+        app:layout_constraintTop_toBottomOf="@+id/email_tv" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_request_chevron"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_chevron_right_24"
+        app:tint="@color/gray_rounded_block_stroke" />
+    <TextView
+        android:id="@+id/type_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="вчера"
+        android:fontFamily="@font/velasans_regular"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phone_tv" />
+
+    <TextView
+        android:id="@+id/type_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/velasans_regular"
+        android:textColor="@color/dark_text"
+        android:textSize="12sp"
+        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/type_date" />
+</androidx.constraintlayout.widget.ConstraintLayout>

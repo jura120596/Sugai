@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/white_with_border_block"
+    android:paddingBottom="16dp"
+    app:srcCompat="@drawable/white_with_border_block"
+    tools:visibility="visible">
+
+
+    <TextView
+        android:id="@+id/tv_appeal_theme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="sans-serif"
+        android:textColor="#39393A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_appeal_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="sans-serif"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_appeal_theme" />
+
+    <TextView
+        android:id="@+id/tv_appeal_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="sans-serif" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
+
+    <ru.sugai.village.ui.components.ViewPagerCarouselView
+        android:id="@+id/viewPager"
+        android:layout_width="0dp"
+        android:layout_height="300sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_appeal_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/white_with_border_block"
+            app:srcCompat="@drawable/white_with_border_block" />
+    </ru.sugai.village.ui.components.ViewPagerCarouselView>
+
+    <Button
+        android:id="@+id/bt_like"
+        android:layout_width="wrap_content"
+        android:layout_height="30sp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/chip"
+        android:backgroundTintMode="add"
+        android:shadowColor="#00FFFFFF"
+        android:stateListAnimator="@null"
+        android:text="0"
+        android:textAllCaps="false"
+        android:textColor="@color/chip_text"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_appeal_name"
+        app:layout_constraintStart_toStartOf="@+id/tv_appeal_name"
+        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
+
+    <Button
+        android:id="@+id/bt_status"
+        android:layout_width="wrap_content"
+        android:layout_height="30sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/chip"
+        android:backgroundTintMode="add"
+        android:drawableTintMode="src_in"
+        android:drawingCacheQuality="auto"
+        android:stateListAnimator="@null"
+        android:text="@string/confirm_btn_title"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_appeal_name"
+        app:layout_constraintEnd_toStartOf="@+id/bt_delete"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/bt_like"
+        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
+
+    <Button
+        android:id="@+id/bt_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="30sp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/chip"
+        android:backgroundTintMode="add"
+        android:drawableTintMode="src_in"
+        android:drawingCacheQuality="auto"
+        android:stateListAnimator="@null"
+        android:text="Удалить"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_appeal_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
+
+    <TextView
+        android:id="@+id/comm_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif"
+        android:paddingEnd="5dp"
+        android:text="@string/comment_tittle"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_appeal_name" />
+
+    <TextView
+        android:id="@+id/comm_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/velasans_extralight"
+        android:text="TextView TextView "
+        android:textColor="#39393A"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/comm_label"
+        app:layout_constraintTop_toBottomOf="@+id/comm_label" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
