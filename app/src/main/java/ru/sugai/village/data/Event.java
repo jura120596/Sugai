@@ -156,7 +156,9 @@ public class Event implements Comparable<Event> {
                         e.printStackTrace();
                     }
                     Toast.makeText(context, "Пользователь или метка не найдены", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                Toast.makeText(context, "Участник мероприятия добавлен", Toast.LENGTH_SHORT).show();
             }
 
             @Override
