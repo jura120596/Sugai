@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,13 +65,22 @@ public class ScannerActivity extends AppCompatActivity {
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
                 || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)
                 || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
+            byte[] a = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
+            String hexdump = new String();
+            for (int i = 0; i < a.length; i++) {
+                String x = Integer.toHexString(((int) a[i] & 0xff));
+                if (x.length() == 1) {
+                    x = '0' + x;
+                }
+                hexdump += x + ' ';
+            }
             Tag tag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             if (tag == null) {
                 setResult(0, new Intent());
                 finish();
             } else {
                 Intent intent1 = new Intent();
-                intent1.putExtra("card_id", detectTagData(tag));
+                intent1.putExtra("card_id", hexdump);
                 setResult(1, intent1);
                 finish();
             }
@@ -79,22 +89,4 @@ public class ScannerActivity extends AppCompatActivity {
         }
     }
 
-    private String detectTagData(Tag tag) {
-        StringBuilder sb = new StringBuilder();
-        byte[] id = tag.getId();
-        long card_id = toDec(id);
-        return String.valueOf(card_id);
-    }
-
-
-    private long toDec(byte[] bytes) {
-        long result = 0;
-        long factor = 1;
-        for (int i = 0; i < bytes.length; ++i) {
-            long value = bytes[i] & 0xffl;
-            result += value * factor;
-            factor *= 256l;
-        }
-        return result;
-    }
 }
