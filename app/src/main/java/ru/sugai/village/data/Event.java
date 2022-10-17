@@ -132,7 +132,7 @@ public class Event implements Comparable<Event> {
 
     public Map<String, String> addParticipant(Context context, String participant_card_id) {
         Map<String, String> e = new HashMap<>();
-        e.put("participant_card_id", participant_card_id);
+        e.put("participant_card_id", participant_card_id.trim());
         addParticipant(context, e);
         return e;
     }
