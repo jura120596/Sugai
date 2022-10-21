@@ -162,25 +162,29 @@ public class AppealsAdapter extends RecyclerView.Adapter {
                     LayoutInflater inflater = ((AppCompatActivity) context).getLayoutInflater();
                     AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());
                     LinearLayout dialoglayout = (LinearLayout) inflater.inflate(R.layout.dialog_comment, null);
-                    final AppEditText comm = new AppEditText(context);
-                    comm.setHint(R.string.comment_title);
-                    dialoglayout.addView(comm);
+                    final AppEditText comment = new AppEditText(context);
+                    comment.setHint(R.string.comment_title);
+                    dialoglayout.addView(comment);
                     builder.setView(dialoglayout);
 
                     builder.setTitle("Подтверждение");
                     builder.setPositiveButton("Потвердить", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(context, comm.getText().toString(), Toast.LENGTH_SHORT).show();;
                             Call<ResponseBody> accept;
-                            if (DataBASE.user.isAdmin()) accept = Retrofit.getInstance().getApi().acceptAppealByAdmin("Bearer "+DataBASE.token,appeal.getId(), comm.getText().toString());
+                            final String text = comment.getText().toString();
+                            if (DataBASE.user.isAdmin()) accept = Retrofit.getInstance().getApi().acceptAppealByAdmin("Bearer "+DataBASE.token,appeal.getId(), text);
                             else accept = Retrofit.getInstance().getApi().acceptAppealByAuthor("Bearer "+DataBASE.token,appeal.getId());
                             accept.enqueue(new Callback<ResponseBody>() {
                                 @Override
                                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                     if(response.isSuccessful()){
                                         Toast.makeText(context, "Потверждено", Toast.LENGTH_SHORT).show();
+                                        appeal.setComment(text);
                                         confirmBtn.setVisibility(View.INVISIBLE);
+                                        comm.setText(text);
+                                        comm.setVisibility(View.VISIBLE);
+                                        commLabel.setVisibility(View.VISIBLE);
                                     } else {
                                         onError();
                                     }

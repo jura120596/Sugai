@@ -129,7 +129,10 @@ public class AppealFragment extends Fragment  {
                 if (response.isSuccessful() && AppealFragment.this.page == page - 1) {
                     AppealFragment.this.page = page;
                     AppealFragment.this.last_page = response.body().getLast_page();
-                    if (page == 1) DataBASE.APPEALS_LIST.clear();
+                    if (page == 1) {
+                        DataBASE.APPEALS_LIST.clear();
+                        adapter.notifyDataSetChanged();
+                    }
                     List<Appeal> data = response.body().getData();
                     DataBASE.APPEALS_LIST.addAll(data);
                     adapter.notifyDataSetChanged();
