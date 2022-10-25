@@ -5,6 +5,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import ru.sugai.village.ui.components.AppEditText;
 
 /**
@@ -36,6 +38,10 @@ public class UserFormState {
     private Object curatorError;
     @Nullable
     private Object pointsError;
+    @Nullable
+    private Object districtIdError;
+    @Nullable
+    private Object villageIdError;
 
     private boolean isDataValid;
 
@@ -89,6 +95,12 @@ public class UserFormState {
             case "username" :
                 this.usernameError = error;
                 break;
+            case "village_id" :
+                this.villageIdError = error;
+                break;
+            case "district_id" :
+                this.districtIdError = error;
+                break;
             default:
                 this.formError = error;
                 break;
@@ -140,6 +152,14 @@ public class UserFormState {
         return addressError;
     }
 
+    public Object getDistrictIdError() {
+        return districtIdError;
+    }
+
+    public Object getVillageIdError() {
+        return villageIdError;
+    }
+
     public String setError(Object error, AppEditText view) {
         String err;
         Context baseContext = view.getContext();
@@ -157,6 +177,22 @@ public class UserFormState {
         return err;
     }
     public String setError(Object error, TextView view) {
+        String err;
+        Context baseContext = view.getContext();
+        if (error == null) {
+            view.setError(null);
+            return null;
+        }
+        if (error instanceof Integer) {
+            err = baseContext.getString((Integer) error);
+        }
+        else {
+            err = error.toString();
+        }
+        view.setError(err);
+        return err;
+    }
+    public String setError(Object error, TextInputLayout view) {
         String err;
         Context baseContext = view.getContext();
         if (error == null) {

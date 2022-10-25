@@ -247,6 +247,69 @@
                     android:fontFamily="@font/velasans_extralight"
                     android:text="TextView" />
             </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/velasans_extralight"
+                    android:paddingEnd="30dp"
+                    android:text="Регион"
+                    android:textColor="@color/dark_text" />
+
+                <TextView
+                    android:id="@+id/region"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/velasans_extralight"
+                    android:text="TextView" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/textView25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/velasans_extralight"
+                    android:paddingEnd="30dp"
+                    android:text="Район"
+                    android:textColor="@color/dark_text" />
+
+                <TextView
+                    android:id="@+id/district1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/velasans_extralight"
+                    android:text="TextView" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/velasans_extralight"
+                    android:paddingEnd="30dp"
+                    android:text="Место"
+                    android:textColor="@color/dark_text" />
+
+                <TextView
+                    android:id="@+id/district2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/velasans_extralight"
+                    android:text="TextView" />
+            </TableRow>
 
         </TableLayout>
 

@@ -1,6 +1,8 @@
 package ru.sugai.village.data;
 
 
+import android.graphics.Color;
+
 import com.yandex.mapkit.map.PolygonMapObject;
 
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ public class MapObject {
     private String color;
     private String created_at;
     private String updated_at;
+    private double lat;
+    private double lng;
     private int client_id;
     private PolygonMapObject polygonMapObject;
 
@@ -63,6 +67,14 @@ public class MapObject {
 
     public String getColor() {
         return color;
+    }
+    public int getIntColor() {
+        String color = getColor();
+        if (color.length() == 9) {
+            color = "#" + color.substring(7,9)+color.substring(1,7);
+        }
+        int intcolor = Color.parseColor(color);
+        return intcolor;
     }
 
     public void setColor(String color) {
@@ -132,5 +144,21 @@ public class MapObject {
 
     public void setPolygonMapObject(PolygonMapObject polygonMapObject) {
         this.polygonMapObject = polygonMapObject;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 }

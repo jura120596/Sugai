@@ -133,7 +133,7 @@ public interface Api {
 
 
     @GET("api/post")
-    Call<ServerListResponse<News>> getNewsList(@Query("page") int page);
+    Call<ServerListResponse<News>> getNewsList(@Header("Authorization") String authHeader, @Query("page") int page);
 
     @DELETE("api/user/post/{user_post_id}")
     Call<ResponseBody> deleteUserAppeal(@Header("Authorization") String authHeader, @Path("user_post_id") int id);
@@ -164,7 +164,7 @@ public interface Api {
     Call<JsonObject> deleteBusEvent(@Header("Authorization") String token,@Path("bus_event_id") int id);
 
     @GET("api/bus/event")
-    Call<ServerListResponse<BusJSON>> getBusList();
+    Call<ServerListResponse<BusJSON>> getBusList(@Header("Authorization") String authHeader);
 
 
 
@@ -249,7 +249,7 @@ public interface Api {
 
 
     @GET("api/event")
-    Call<ServerListResponse<Event>> getEventList(@Query("page") int id);
+    Call<ServerListResponse<Event>> getEventList(@Header("Authorization") String authHeader, @Query("page") int id);
 
     @POST("api/event")
     @Headers({"Accept: application/json"})

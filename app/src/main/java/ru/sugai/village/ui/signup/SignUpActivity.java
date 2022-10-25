@@ -7,6 +7,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -17,15 +19,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.ArrayList;
+
+import ru.sugai.village.R;
+import ru.sugai.village.data.District;
 import ru.sugai.village.data.User;
 import ru.sugai.village.databinding.ActivitySignUpBinding;
 import ru.sugai.village.retrofit.Retrofit;
 import ru.sugai.village.ui.components.AppEditText;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity  implements TextWatcher{
 
     private UserFormViewModel viewModel;
     private ActivitySignUpBinding binding;
+    private AutoCompleteTextView districtMenu;
+    ArrayList<District> districts = new ArrayList<>();
+    ArrayAdapter<District> districtAdapter;
+    private AutoCompleteTextView villageMenu;
+    ArrayList<District> villages = new ArrayList<>();
+    ArrayAdapter<District> villagesAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +55,14 @@ public class SignUpActivity extends AppCompatActivity {
         final AppEditText lastNameEt = (AppEditText) binding.lastName;
         final AppEditText addressEt = (AppEditText) binding.address;
         final AppEditText phoneEt = (AppEditText) binding.phone;
+        TextInputLayout menu = (binding.menu);
+        TextInputLayout menu2 = (binding.menu2);
+        districtAdapter = new ArrayAdapter<District>(getBaseContext(), android.R.layout.simple_list_item_1, districts);
+        villagesAdapter = new ArrayAdapter<District>(getBaseContext(), android.R.layout.simple_list_item_1, villages);
+        villageMenu = (AutoCompleteTextView) menu2.getEditText();
+        districtMenu = (AutoCompleteTextView) menu.getEditText();
+        villageMenu.setAdapter(villagesAdapter);
+        districtMenu.setAdapter(districtAdapter);
         final Button signupBtn = binding.login;
         final ProgressBar loadingProgressBar = binding.loading;
 
@@ -57,6 +79,9 @@ public class SignUpActivity extends AppCompatActivity {
                 userForm.setError(userForm.getSecondNameError(), secondNameEt);
                 userForm.setError(userForm.getAddressError(), addressEt);
                 userForm.setError(userForm.getPhoneError(), phoneEt);
+                userForm.setError(userForm.getFormError(), binding.textView3);
+                userForm.setError(userForm.getDistrictIdError(), menu);
+                userForm.setError(userForm.getVillageIdError(), menu2);
                 userForm.setError(userForm.getFormError(), binding.textView3);
                 loadingProgressBar.setVisibility(View.GONE);
             }
@@ -108,6 +133,8 @@ public class SignUpActivity extends AppCompatActivity {
         addressEt.addTextChangedListener(afterTextChangedListener);
         phoneEt.addTextChangedListener(afterTextChangedListener);
         nameEt.addTextChangedListener(afterTextChangedListener);
+        menu.getEditText().addTextChangedListener(this);
+        menu2.getEditText().addTextChangedListener(this);
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +152,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+
     private void updateUiWithUser(User model) {
         String welcome = model.getName() + ", проверяйте почту и возвращайтесь!";
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
@@ -132,5 +160,18 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        System.out.println(charSequence);
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
     }
 }

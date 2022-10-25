@@ -96,7 +96,7 @@ public class FragmentBus extends Fragment {
 
 
     private void getBus() {
-        Call<ServerListResponse<BusJSON>> getBus = Retrofit.getInstance().getApi().getBusList();
+        Call<ServerListResponse<BusJSON>> getBus = Retrofit.getInstance().getApi().getBusList("Bearer " + DataBASE.token);
         if(swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(true);
         getBus.enqueue(new Callback<ServerListResponse<BusJSON>>() {
             @Override

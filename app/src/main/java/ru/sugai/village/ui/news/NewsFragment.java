@@ -104,7 +104,7 @@ public class NewsFragment extends Fragment {
 
     private void getNews(int page) {
         if (last_page > 0 && last_page < page) return;
-        Call<ServerListResponse<News>> getNewsList = Retrofit.getInstance().getApi().getNewsList(page);
+        Call<ServerListResponse<News>> getNewsList = Retrofit.getInstance().getApi().getNewsList("Bearer " + DataBASE.token, page);
         if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(true);
         getNewsList.enqueue(new Callback<ServerListResponse<News>>() {
             @Override

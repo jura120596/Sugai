@@ -86,9 +86,20 @@ public class UserProfileFragment extends Fragment {
         TextView viewById6 = (TextView) view.findViewById(R.id.profile_points_tv);
         viewById6.setText(user.getPoints()+"");
         TextView viewById7 = (TextView) view.findViewById(R.id.card_id);
-        viewById7.setText(("не выдана"));
         if (user.getCard_id() != null && !user.getCard_id().isEmpty())
-            ((TextView) view.findViewById(R.id.card_id)).setText(user.getCard_id());
+            viewById7.setText(user.getCard_id());
+        viewById7.setText(("не выдана"));
+        TextView viewById8 = (TextView) view.findViewById(R.id.region);
+        viewById8.setText(("не указан"));
+        TextView viewById9 = (TextView) view.findViewById(R.id.district1);
+        viewById9.setText(("не указан"));
+        if (user.getDistrict() != null) {
+            viewById9.setText(user.getDistrict().getName());
+            viewById8.setText(user.getDistrict().getRegion().getName());
+        }
+        TextView viewById10 = (TextView) view.findViewById(R.id.district2);
+        viewById10.setText(("не выбрано"));
+        if (user.getVillage() != null) viewById10.setText(user.getVillage().getName());
         viewById.setMaxWidth(tl.getWidth() - label.getWidth());
         viewById1.setMaxWidth(tl.getWidth() - label.getWidth());
         viewById2.setMaxWidth(tl.getWidth() - label.getWidth());
@@ -97,6 +108,8 @@ public class UserProfileFragment extends Fragment {
         viewById5.setMaxWidth(tl.getWidth() - label.getWidth());
         viewById6.setMaxWidth(tl.getWidth() - label.getWidth());
         viewById7.setMaxWidth(tl.getWidth() - label.getWidth());
+        viewById9.setMaxWidth(tl.getWidth() - label.getWidth());
+        viewById10.setMaxWidth(tl.getWidth() - label.getWidth());
     }
 
     @Override

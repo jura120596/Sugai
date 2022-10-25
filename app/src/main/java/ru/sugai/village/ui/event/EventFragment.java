@@ -162,7 +162,7 @@ public class EventFragment extends AddEventFragment {
     }
     public void loadEvents(int page) {
         if (last_page >0 && last_page< page) return;
-        Call<ServerListResponse<Event>> getEventList = Retrofit.getInstance().getApi().getEventList(page);
+        Call<ServerListResponse<Event>> getEventList = Retrofit.getInstance().getApi().getEventList("Bearer " + DataBASE.token, page);
         if(swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(true);
         getEventList.enqueue(new Callback<ServerListResponse<Event>>() {
             @Override

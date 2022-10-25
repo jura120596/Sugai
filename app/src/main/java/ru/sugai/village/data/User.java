@@ -25,6 +25,10 @@ public class User {
     private boolean curator;
     private boolean accept = true;
     private String address;
+    private District village;
+    private District district;
+    private int district_id;
+    private int village_id;
     private News data;
 
     
@@ -216,6 +220,38 @@ public class User {
 
     public void setQr(String qr) {
         this.qr = qr;
+    }
+
+    public District getVillage() {
+        return village;
+    }
+
+    public void setVillage(District village) {
+        this.village = village;
+    }
+
+    public District getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(District district) {
+        this.district = district;
+    }
+
+    public int getDistrict_id() {
+        return district_id;
+    }
+
+    public void setDistrict_id(int district_id) {
+        this.district_id = district_id;
+    }
+
+    public int getVillage_id() {
+        return village_id;
+    }
+
+    public void setVillage_id(int village_id) {
+        this.village_id = village_id;
     }
 
     @Override

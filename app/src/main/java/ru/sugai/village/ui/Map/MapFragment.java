@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import ru.sugai.village.CONST.CONST;
@@ -33,6 +36,7 @@ import com.yandex.mapkit.map.PlacemarkMapObject;
 import com.yandex.mapkit.map.PolygonMapObject;
 import com.yandex.mapkit.mapview.MapView;
 import com.yandex.runtime.image.ImageProvider;
+import com.yandex.runtime.ui_view.ViewProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +74,8 @@ public class MapFragment extends Fragment {
                     List<MapObject> data = response.body().getData();
                     Log.d(CONST.SERVER_LOG, data.toString());
                     for (MapObject mo: data) {
-                        addPolygon(mo);
+                        if (mo.getType().equals("marker")) addPlacemark(mo);
+                        else addPolygon(mo);
                     }
                 }
             }
@@ -86,11 +91,13 @@ public class MapFragment extends Fragment {
     }
 
 
-    private void addPlacemark(double latitude, double longitude){
+    private void addPlacemark(MapObject mo){
 
-        PlacemarkMapObject mapObject= mapObjects.addPlacemark(new Point(latitude,longitude),ImageProvider.fromResource(getContext(),R.drawable.ic_baseline_location_on_24));
-
-
+        View view = new View(getActivity());
+        view.setBackground(getActivity().getDrawable(R.drawable.ic_baseline_location_on_24));
+        ((VectorDrawable) view.getBackground()).setTint(mo.getIntColor());
+        mapview.getMap().getMapObjects()
+                .addPlacemark(new Point(mo.getLat(),mo.getLng()), new ViewProvider(view));
     }
 
 
@@ -108,13 +115,8 @@ public class MapFragment extends Fragment {
         PolygonMapObject polygon = mapObjects.addPolygon(new Polygon(new LinearRing(points), new ArrayList<LinearRing>()));
         mapObject.setPolygonMapObject(polygon);
         polygon.setUserData(mapObject);
-        String color = mapObject.getColor();
-        if (color.length() == 9) {
-            color = "#" + color.substring(7,9)+color.substring(1,7);
-        }
-        int intcolor = Color.parseColor(color);
-        polygon.setFillColor(intcolor);
-        polygon.setStrokeColor(intcolor);
+        polygon.setFillColor(mapObject.getIntColor());
+        polygon.setStrokeColor(mapObject.getIntColor());
         polygon.setStrokeWidth(0.5F);
         polygon.addTapListener((mapObject1, point) -> {
             LayoutInflater inflater = ((AppCompatActivity) getContext()).getLayoutInflater();
