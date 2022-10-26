@@ -27,8 +27,8 @@ public class User {
     private String address;
     private District village;
     private District district;
-    private int district_id;
-    private int village_id;
+    private Integer district_id;
+    private Integer village_id;
     private News data;
 
     
@@ -46,6 +46,10 @@ public class User {
 
     public String getAddress() {
         return address == null ? "" : address;
+    }
+    public String getFullAddress() {
+        return (getVillage() != null ? getVillage().getName() : (getDistrict()!=null ? getDistrict().getName() : ""))
+                + (!getAddress().isEmpty() ? ", " :"")+ getAddress();
     }
 
     public void setAddress(String address) {
@@ -238,19 +242,19 @@ public class User {
         this.district = district;
     }
 
-    public int getDistrict_id() {
+    public Integer getDistrict_id() {
         return district_id;
     }
 
-    public void setDistrict_id(int district_id) {
+    public void setDistrict_id(Integer district_id) {
         this.district_id = district_id;
     }
 
-    public int getVillage_id() {
+    public Integer getVillage_id() {
         return village_id;
     }
 
-    public void setVillage_id(int village_id) {
+    public void setVillage_id(Integer village_id) {
         this.village_id = village_id;
     }
 

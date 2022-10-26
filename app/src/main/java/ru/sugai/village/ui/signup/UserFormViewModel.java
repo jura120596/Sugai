@@ -27,6 +27,7 @@ public class UserFormViewModel extends ViewModel {
     private MutableLiveData<User> userData = new MutableLiveData<>();
     private Context context;
     UserFormViewModel() {
+        userData.setValue(new User());
     }
 
     public LiveData<UserFormState> getSignUpFormState() {
@@ -72,54 +73,60 @@ public class UserFormViewModel extends ViewModel {
         });
     }
 
-    public void loginDataChanged(String username, String name, String second, String last, String address, String phone) {
-        loginDataChanged(username, name, second,last,address,phone, null, null, null);
-    }
     public void profileDataChanged( String name, String second, String last, String address, String password, String password_confirmation) {
-        loginDataChanged(null, name, second,last,address,null, null, null, null, password, password_confirmation);
+        loginDataChanged(null, name, second,last,address,null, null, null, null, password, password_confirmation, null, null);
     }
     public void loginDataChanged(String username, String name, String second, String last, String address, String phone, String card, String points, Boolean curator) {
-        loginDataChanged(username, name, second, last, address,phone, card, points, curator, null, null);
+        loginDataChanged(username, name, second, last, address,phone, card, points, curator, null, null, null, null);
     }
-    public void loginDataChanged(String username, String name, String second, String last, String address, String phone, String card, String points, Boolean curator, String p, String p2) {
+    public void loginDataChanged(String username, String name, String second, String last, String address, String phone, String card, String points, Boolean curator, String p, String p2, Integer did, Integer village_id) {
+        UserFormState state = new UserFormState(true);
         if (p != null && !isPasswordValid(p)) {
-            signUpFormState.setValue(new UserFormState("password", R.string.invalid_password));
-        } else if (p2 != null && !p2.equals(p)) {
-            signUpFormState.setValue(new UserFormState("password_confirmation", R.string.invalid_password2));
-        } else if (username != null && !isUserNameValid(username)) {
-            signUpFormState.setValue(new UserFormState("email", R.string.invalid_username));
-        } else if (!isNameValid(name)) {
-            signUpFormState.setValue(new UserFormState("name", R.string.invalid_name));
-        } else if (!isNameValid(second)) {
-            signUpFormState.setValue(new UserFormState("second_name", R.string.invalid_second_name));
-        } else if (!isLastValid(last)) {
-            signUpFormState.setValue(new UserFormState("last_name", R.string.invalid_last_name));
-        } else if (!isLastValid(address)) {
-            signUpFormState.setValue(new UserFormState("address", R.string.invalid_address));
-        } else if (phone != null && !isPhoneValid(phone)) {
-            if (phone.matches("^\\+?7")) signUpFormState.setValue(new UserFormState("phone", R.string.invalid_phone));
-            else if (phone.length()!=10) signUpFormState.setValue(new UserFormState("phone", R.string.invalid_phone_length));
-        } else {
-            User value = new User();
-            value.setEmail(username);
-            value.setAddress(address);
-            value.setPhone(phone);
-            value.setName(name);
-            value.setLast_name(last);
-            value.setSecond_name(second);
-            value.setPassword(p);
-            value.setPassword_confirmation(p2);
-            if(card != null && !card.isEmpty()) value.setCard_id(card);
-            else value.setCard_id("");
-            try {
-                if (points != null) value.setPoints(Integer.parseInt(points));
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
-            if(curator != null) value.setCurator(curator);
-            userData.setValue(value);
-            signUpFormState.setValue(new UserFormState(true));
+            state.addError("password", R.string.invalid_password);
         }
+        if (p2 != null && !p2.equals(p)) {
+            state.addError("password_confirmation", R.string.invalid_password2);
+        }
+        if (username != null && !isUserNameValid(username)) {
+            state.addError("email", R.string.invalid_username);
+        }
+        if (!isNameValid(name)) {
+            state.addError("name", R.string.invalid_name);
+        }
+        if (!isNameValid(second)) {
+            state.addError("second_name", R.string.invalid_second_name);
+        }
+        if (!isLastValid(last)) {
+            state.addError("last_name", R.string.invalid_last_name);
+        }
+        if (!isLastValid(address)) {
+            state.addError("address", R.string.invalid_address);
+        }
+        if (phone != null && !isPhoneValid(phone)) {
+            if (phone.matches("^\\+?7")) state.addError("phone", R.string.invalid_phone);
+            if (phone.length() != 10) state.addError("phone", R.string.invalid_phone_length);
+        }
+        User value = new User();
+        value.setEmail(username);
+        value.setAddress(address);
+        value.setPhone(phone);
+        value.setName(name);
+        value.setLast_name(last);
+        value.setSecond_name(second);
+        value.setPassword(p);
+        value.setPassword_confirmation(p2);
+        value.setDistrict_id(did);
+        value.setVillage_id(village_id);
+        if(card != null && !card.isEmpty()) value.setCard_id(card);
+        else value.setCard_id("");
+        try {
+            if (points != null) value.setPoints(Integer.parseInt(points));
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        if(curator != null) value.setCurator(curator);
+        userData.setValue(value);
+        signUpFormState.setValue(state);
     }
 
     // A placeholder username validation check

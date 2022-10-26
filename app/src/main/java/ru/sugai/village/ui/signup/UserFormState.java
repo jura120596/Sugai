@@ -60,6 +60,7 @@ public class UserFormState {
     }
 
     public void addError(String field, Object error) {
+        isDataValid = false;
         if (field != null) switch (field) {
             case "name" :
                 this.nameError = error;

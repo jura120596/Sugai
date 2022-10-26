@@ -44,8 +44,7 @@
                 android:layout_marginTop="96dp"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
-                android:selectAllOnFocus="true"
-                android:text="info@sugai.ru" />
+                android:selectAllOnFocus="true" />
 
             <ru.sugai.village.ui.components.AppEditText
                 android:id="@+id/second_name"
@@ -54,8 +53,7 @@
                 android:layout_marginTop="4dp"
                 android:hint="@string/second_name"
                 android:imeActionLabel="@string/action_sign_in_short"
-                android:selectAllOnFocus="true"
-                android:text="Миронов" />
+                android:selectAllOnFocus="true" />
 
             <ru.sugai.village.ui.components.AppEditText
                 android:id="@+id/name"
@@ -64,8 +62,7 @@
                 android:layout_marginTop="4dp"
                 android:hint="@string/name"
                 android:imeActionLabel="@string/action_sign_in_short"
-                android:selectAllOnFocus="true"
-                android:text="Юрий" />
+                android:selectAllOnFocus="true" />
 
             <ru.sugai.village.ui.components.AppEditText
                 android:id="@+id/last_name"
@@ -95,8 +92,7 @@
                 android:imeOptions="actionDone"
                 android:inputType="phone"
                 android:maxLength="10"
-                android:selectAllOnFocus="true"
-                android:text="9279931787" />
+                android:selectAllOnFocus="true" />
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/menu"
                 style="@style/ThemeOverlay.App.ExposedDropdownMenu"
@@ -118,8 +114,6 @@
                 <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:cursorVisible="false"
-                    android:editable="false"
                     android:hint="Выберите район"
                     android:inputType="none"
                     android:textSize="15sp"

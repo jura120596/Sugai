@@ -2,6 +2,7 @@ package ru.sugai.village.retrofit;
 
 import ru.sugai.village.data.Appeal;
 import ru.sugai.village.data.BusJSON;
+import ru.sugai.village.data.District;
 import ru.sugai.village.data.Event;
 import ru.sugai.village.data.History;
 import ru.sugai.village.data.MapObject;
@@ -48,6 +49,11 @@ public interface Api {
     @Headers({"Accept: application/json"})
     @POST("api/auth/signup/")
     Call<ResponseBody> registration(@Body User user);
+
+    @GET("api/district")
+    Call<ServerListResponse<District>> loadDistricts(@Query("name") String name, @Query("level") Integer level, @Query("parent_district_id") Integer pid);
+    @GET("api/district")
+    Call<ServerListResponse<District>> loadDistricts(@Query("name") String name, @Query("level") Integer level);
 
     @POST("api/auth/logout/")
     Call<ResponseBody> logout(@Header("Authorization") String authHeader);

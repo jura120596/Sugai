@@ -1,12 +1,15 @@
 package ru.sugai.village.ui.signup;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -23,11 +26,14 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
-import ru.sugai.village.R;
+import retrofit2.Call;
+import retrofit2.Response;
 import ru.sugai.village.data.District;
+import ru.sugai.village.data.ServerListResponse;
 import ru.sugai.village.data.User;
 import ru.sugai.village.databinding.ActivitySignUpBinding;
 import ru.sugai.village.retrofit.Retrofit;
+import ru.sugai.village.retrofit.call.ValidateCallback;
 import ru.sugai.village.ui.components.AppEditText;
 
 public class SignUpActivity extends AppCompatActivity  implements TextWatcher{
@@ -40,29 +46,27 @@ public class SignUpActivity extends AppCompatActivity  implements TextWatcher{
     private AutoCompleteTextView villageMenu;
     ArrayList<District> villages = new ArrayList<>();
     ArrayAdapter<District> villagesAdapter;
+    private AppEditText usernameEditText,nameEt,secondNameEt, lastNameEt, addressEt,phoneEt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        loadDistricts();
         viewModel = new ViewModelProvider(this, new SignUpViewModelFactory())
                 .get(UserFormViewModel.class);
         viewModel.setContext(this);
-        final AppEditText usernameEditText = (AppEditText) binding.username;
-        final AppEditText nameEt = (AppEditText) binding.name;
-        final AppEditText secondNameEt = (AppEditText) binding.secondName;
-        final AppEditText lastNameEt = (AppEditText) binding.lastName;
-        final AppEditText addressEt = (AppEditText) binding.address;
-        final AppEditText phoneEt = (AppEditText) binding.phone;
+        usernameEditText = (AppEditText) binding.username;
+        nameEt = (AppEditText) binding.name;
+        secondNameEt = (AppEditText) binding.secondName;
+        lastNameEt = (AppEditText) binding.lastName;
+        addressEt = (AppEditText) binding.address;
+        phoneEt = (AppEditText) binding.phone;
         TextInputLayout menu = (binding.menu);
         TextInputLayout menu2 = (binding.menu2);
-        districtAdapter = new ArrayAdapter<District>(getBaseContext(), android.R.layout.simple_list_item_1, districts);
-        villagesAdapter = new ArrayAdapter<District>(getBaseContext(), android.R.layout.simple_list_item_1, villages);
         villageMenu = (AutoCompleteTextView) menu2.getEditText();
         districtMenu = (AutoCompleteTextView) menu.getEditText();
-        villageMenu.setAdapter(villagesAdapter);
-        districtMenu.setAdapter(districtAdapter);
         final Button signupBtn = binding.login;
         final ProgressBar loadingProgressBar = binding.loading;
 
@@ -79,7 +83,6 @@ public class SignUpActivity extends AppCompatActivity  implements TextWatcher{
                 userForm.setError(userForm.getSecondNameError(), secondNameEt);
                 userForm.setError(userForm.getAddressError(), addressEt);
                 userForm.setError(userForm.getPhoneError(), phoneEt);
-                userForm.setError(userForm.getFormError(), binding.textView3);
                 userForm.setError(userForm.getDistrictIdError(), menu);
                 userForm.setError(userForm.getVillageIdError(), menu2);
                 userForm.setError(userForm.getFormError(), binding.textView3);
@@ -111,20 +114,11 @@ public class SignUpActivity extends AppCompatActivity  implements TextWatcher{
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
             @Override
             public void afterTextChanged(Editable s) {
-                viewModel.loginDataChanged(
-                        usernameEditText.getText().toString(),
-                        nameEt.getText().toString(),
-                        secondNameEt.getText().toString(),
-                        lastNameEt.getText().toString(),
-                        addressEt.getText().toString(),
-                        phoneEt.getText().toString()
-                );
+                updateFormData(viewModel.getUserData().getValue().getDistrict_id(),viewModel.getUserData().getValue().getVillage_id());
             }
         };
         usernameEditText.addTextChangedListener(afterTextChangedListener);
@@ -134,7 +128,26 @@ public class SignUpActivity extends AppCompatActivity  implements TextWatcher{
         phoneEt.addTextChangedListener(afterTextChangedListener);
         nameEt.addTextChangedListener(afterTextChangedListener);
         menu.getEditText().addTextChangedListener(this);
-        menu2.getEditText().addTextChangedListener(this);
+        districtMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Integer did = null;
+                if (i < districts.size()) {
+                    did = districts.get(i).getId();
+                    updateFormData(did, null);
+                }
+                villageMenu.clearListSelection();
+                loadDistricts(null, 2, did);
+            }
+        });
+        villageMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i < villages.size()) {
+                    updateFormData(viewModel.getUserData().getValue().getDistrict_id(), villages.get(i).getId());
+                }
+            }
+        });
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +165,18 @@ public class SignUpActivity extends AppCompatActivity  implements TextWatcher{
         });
     }
 
+    private void updateFormData(Integer did, Integer vid){
+        viewModel.loginDataChanged(
+                usernameEditText.getText().toString(),
+                nameEt.getText().toString(),
+                secondNameEt.getText().toString(),
+                lastNameEt.getText().toString(),
+                addressEt.getText().toString(),
+                phoneEt.getText().toString(),
+                null, null, null, null, null, did, vid
+        );
+    }
+
 
     private void updateUiWithUser(User model) {
         String welcome = model.getName() + ", проверяйте почту и возвращайтесь!";
@@ -165,13 +190,48 @@ public class SignUpActivity extends AppCompatActivity  implements TextWatcher{
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
+    Handler districtsLoader;
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        System.out.println(charSequence);
+        if (districtsLoader!=null) {
+            districtsLoader.removeCallbacksAndMessages(null);
+        }
+        districtsLoader = (new Handler());
+        districtsLoader.postDelayed(() -> {
+            loadDistricts(charSequence.toString(), 1,null);
+        }, 500);
     }
 
     @Override
     public void afterTextChanged(Editable editable) {
+    }
+
+    public void loadDistricts() {
+        loadDistricts(null, 1, null);
+    }
+    public void loadDistricts(String name, Integer level, Integer pdi) {
+        Call<ServerListResponse<District>> call = Retrofit.getInstance().getApi().loadDistricts(name, level, pdi);
+        call.enqueue(new ValidateCallback<ServerListResponse<District>>() {
+            @Override
+            public void onSuccess(Call<ServerListResponse<District>> call, Response<ServerListResponse<District>> response) {
+                switch (level) {
+                    case 1:
+                        districts = (ArrayList<District>) response.body().getData();
+                        districtAdapter = new ArrayAdapter<District>(getBaseContext(), android.R.layout.simple_list_item_1, districts);;
+                        districtMenu.setAdapter(districtAdapter);
+                        break;
+                    case 2:
+                        villages = (ArrayList<District>) response.body().getData();
+                        villagesAdapter = new ArrayAdapter<District>(getBaseContext(), android.R.layout.simple_list_item_1, villages);;
+                        villageMenu.setAdapter(villagesAdapter);
+                        break;
+                }
+            }
+
+            @Override
+            public Context getContext() {
+                return SignUpActivity.this;
+            }
+        });
     }
 }

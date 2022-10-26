@@ -64,6 +64,7 @@ public class AppEditText extends FrameLayout {
     }
     public void setError(String text) {
         l.setError(text);
+        l.setErrorEnabled(text != null);
     }
     public void setHint(int text) {
         l.setHint(text);

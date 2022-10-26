@@ -176,7 +176,7 @@ public class UserEditFragment extends Fragment implements View.OnClickListener {
         }
         if (resultCode == 1) {
             cardnum.setText(card);
-            viewModel.loginDataChanged(null,null,null,null,null,null,card,null, null, null, null);
+            viewModel.loginDataChanged(null,null,null,null,null,null,card,null, null, null, null, null, null);
             System.out.println(card);
         } else {
             super.onActivityResult(requestCode, resultCode, data);

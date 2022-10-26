@@ -29,7 +29,7 @@ public abstract class ValidateCallback <T> implements Callback<T> {
     abstract public Context getContext();
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
-        System.out.println(response.code());
+        System.out.println(call.request().method() + " " + call.request().url().url() +" -> " + response.code());
         if (response.code() >= 500||response.code() == 404) {
             on500(call,response);
             return;

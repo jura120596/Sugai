@@ -36,4 +36,9 @@ public class District {
     public void setRegion(District region) {
         this.region = region;
     }
+
+    @Override
+    public String toString() {
+        return  name;
+    }
 }

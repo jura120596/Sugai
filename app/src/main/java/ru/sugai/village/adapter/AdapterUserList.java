@@ -54,7 +54,7 @@ public class AdapterUserList extends RecyclerView.Adapter<AdapterUserList.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
         TextView id, points,fullname,email,phone,adress,status;
-        ImageView button;
+        ImageView blockBtn;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             id = itemView.findViewById(R.id.tv_user_id);
@@ -63,7 +63,7 @@ public class AdapterUserList extends RecyclerView.Adapter<AdapterUserList.MyView
             email = itemView.findViewById(R.id.textView11);
             phone = itemView.findViewById(R.id.textView12);
             adress = itemView.findViewById(R.id.textView14);
-            button =  itemView.findViewById(R.id.bt_userlist_block);
+            blockBtn =  itemView.findViewById(R.id.bt_userlist_block);
             itemView.setOnLongClickListener(this);
             itemView.setOnClickListener(this);
         }
@@ -80,17 +80,21 @@ public class AdapterUserList extends RecyclerView.Adapter<AdapterUserList.MyView
             email.setText("Почта: "+user.getEmail());
             fullname.setText("ФИО: "+user.getFull_name());
             phone.setText("Телефон: "+user.getPhone());
-            adress.setText("Адрес: "+user.getAddress());
-            if (user.isAdmin()) button.setVisibility(View.INVISIBLE);
-            if (user.getBlocked()==0) {
-                button.setImageDrawable(a.getDrawable(R.drawable.ic_lock_open_24));
-                button.setColorFilter(ContextCompat.getColor(a, R.color.accept), android.graphics.PorterDuff.Mode.MULTIPLY);
+            adress.setText("Адрес: "+user.getFullAddress());
+            if (user.isAdmin() && user.getDistrict_id() == null || DataBASE.user.getId() == user.getId()) {
+                blockBtn.setVisibility(View.INVISIBLE);
             } else {
-                button.setImageDrawable(a.getDrawable(R.drawable.ic_lock_24));
-                button.setColorFilter(ContextCompat.getColor(a, R.color.like), android.graphics.PorterDuff.Mode.MULTIPLY);
+                blockBtn.setVisibility(View.VISIBLE);
+            }
+            if (user.getBlocked()==0) {
+                blockBtn.setImageDrawable(a.getDrawable(R.drawable.ic_lock_open_24));
+                blockBtn.setColorFilter(ContextCompat.getColor(a, R.color.accept), android.graphics.PorterDuff.Mode.MULTIPLY);
+            } else {
+                blockBtn.setImageDrawable(a.getDrawable(R.drawable.ic_lock_24));
+                blockBtn.setColorFilter(ContextCompat.getColor(a, R.color.like), android.graphics.PorterDuff.Mode.MULTIPLY);
 
             }
-            button.setOnClickListener(new View.OnClickListener() {
+            blockBtn.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
