@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -84,6 +85,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        NavigationView nv = findViewById(R.id.nav_view);
+        TextView title = null;
+        if (nv != null) {
+            title = nv.getHeaderView(0).findViewById(R.id.menutitle);
+        }
+        if (title != null && DataBASE.user != null && DataBASE.user.getVillage() != null){
+            String name = DataBASE.user.getVillage().getName();
+            if (name.length() > 12) {
+                title.setTextScaleX(0.6F);
+                title.setTextSize(25);
+            }
+            if (name.length() <30)title.setText(name);
+        }
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);

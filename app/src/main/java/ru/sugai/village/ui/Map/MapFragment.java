@@ -95,7 +95,9 @@ public class MapFragment extends Fragment {
 
         View view = new View(getActivity());
         view.setBackground(getActivity().getDrawable(R.drawable.ic_baseline_location_on_24));
-        ((VectorDrawable) view.getBackground()).setTint(mo.getIntColor());
+        view.setMinimumWidth(100);
+        view.setMinimumHeight(100);
+        ((VectorDrawable) view.getBackground()).setTint(mo.getIntColor(false));
         mapview.getMap().getMapObjects()
                 .addPlacemark(new Point(mo.getLat(),mo.getLng()), new ViewProvider(view));
     }

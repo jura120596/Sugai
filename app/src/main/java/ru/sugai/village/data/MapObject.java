@@ -69,9 +69,12 @@ public class MapObject {
         return color;
     }
     public int getIntColor() {
+        return getIntColor(true);
+    }
+    public int getIntColor(boolean alfa) {
         String color = getColor();
         if (color.length() == 9) {
-            color = "#" + color.substring(7,9)+color.substring(1,7);
+            color = "#" + (alfa ? color.substring(7,9) : "")+color.substring(1,7);
         }
         int intcolor = Color.parseColor(color);
         return intcolor;

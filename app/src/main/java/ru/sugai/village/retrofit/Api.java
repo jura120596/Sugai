@@ -43,11 +43,11 @@ public interface Api {
 
     @FormUrlEncoded
     @Headers({"Accept: application/json"})
-    @POST("api/auth/login/")
+    @POST("api/auth/login")
     Call<JsonObject> login(@Field("email")String email, @Field("password") String password);
 
     @Headers({"Accept: application/json"})
-    @POST("api/auth/signup/")
+    @POST("api/auth/signup")
     Call<ResponseBody> registration(@Body User user);
 
     @GET("api/district")
@@ -55,7 +55,7 @@ public interface Api {
     @GET("api/district")
     Call<ServerListResponse<District>> loadDistricts(@Query("name") String name, @Query("level") Integer level);
 
-    @POST("api/auth/logout/")
+    @POST("api/auth/logout")
     Call<ResponseBody> logout(@Header("Authorization") String authHeader);
 
     @FormUrlEncoded
@@ -153,7 +153,7 @@ public interface Api {
     @POST("api/user/post/{user_post_id}/{like}")
     Call<ResponseBody> likeAppeal(@Header("Authorization") String authHeader, @Path("user_post_id") int id, @Path("like") String like);
 
-    @GET("api/user/post/")
+    @GET("api/user/post")
     Call<ServerListResponse<Appeal>> getAppeals(@Header("Authorization") String authHeader, @Query("mode") String mode, @Query("page") String page);
 
 
@@ -273,10 +273,10 @@ public interface Api {
     @DELETE("api/event/{event_id}")
     Call<ResponseBody> deleteEvent(@Header("Authorization") String heder, @Path("event_id") int event_id);
 
-    @GET("api/request/")
+    @GET("api/request")
     Call<ServerListResponse<UserRequest>> getUserRequests(@Header("Authorization") String header, @Query("role") int role, @Query("page") int p);
 
-    @POST("api/request/")
+    @POST("api/request")
     @Headers({"Accept: application/json"})
     Call<ServerItemResponse<UserRequest>> addUserRequests(@Header("Authorization") String header, @Body UserRequest message);
 
