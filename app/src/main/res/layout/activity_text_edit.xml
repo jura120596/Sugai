@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:fitsSystemWindows="true"
-    tools:context="ru.sugai.village.TextEditActivity">
+    tools:context="com.github.jura120596.molodec.TextEditActivity">
 
     <EditText
         android:id="@+id/textEditor"

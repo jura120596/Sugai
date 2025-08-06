@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.User.UserEditFragment">
 
-    <ru.sugai.village.ui.components.AppEditText
+    <com.github.jura120596.molodec.ui.components.AppEditText
         android:id="@+id/etv_prof_edit_password_confirmation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etv_prof_edit_password" />
 
-    <ru.sugai.village.ui.components.AppEditText
+    <com.github.jura120596.molodec.ui.components.AppEditText
         android:id="@+id/etv_prof_edit_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etv_prof_edit_adress" />
 
-    <ru.sugai.village.ui.components.AppEditText
+    <com.github.jura120596.molodec.ui.components.AppEditText
         android:id="@+id/etv_prof_edit_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ru.sugai.village.ui.components.AppEditText
+    <com.github.jura120596.molodec.ui.components.AppEditText
         android:id="@+id/etv_prof_edit_second_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etv_prof_edit_name" />
 
-    <ru.sugai.village.ui.components.AppEditText
+    <com.github.jura120596.molodec.ui.components.AppEditText
         android:id="@+id/etv_prof_edit_last_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etv_prof_edit_second_name" />
 
-    <ru.sugai.village.ui.components.AppEditText
+    <com.github.jura120596.molodec.ui.components.AppEditText
         android:id="@+id/etv_prof_edit_adress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etv_prof_edit_last_name" />
 
-    <ru.sugai.village.ui.components.AppButton
+    <com.github.jura120596.molodec.ui.components.AppButton
         android:id="@+id/bt_editProf"
         android:layout_width="match_parent"
         android:layout_height="32dp"

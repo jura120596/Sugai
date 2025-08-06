@@ -51,7 +51,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewPager" />
 
-    <ru.sugai.village.ui.components.ViewPagerCarouselView
+    <com.github.jura120596.molodec.ui.components.ViewPagerCarouselView
         android:id="@+id/viewPager"
         android:layout_width="0dp"
         android:layout_height="300sp"
@@ -70,7 +70,7 @@
             android:layout_marginEnd="2dp"
             android:background="@drawable/white_with_border_block"
             app:srcCompat="@drawable/white_with_border_block" />
-    </ru.sugai.village.ui.components.ViewPagerCarouselView>
+    </com.github.jura120596.molodec.ui.components.ViewPagerCarouselView>
 
     <Button
         android:id="@+id/bt_like"

@@ -52,7 +52,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etv_fragment_busedit_place" />
 
-        <ru.sugai.village.ui.components.AppButton
+        <com.github.jura120596.molodec.ui.components.AppButton
             android:id="@+id/bt_fragment_busedit"
             android:layout_width="match_parent"
             android:layout_height="32dp"

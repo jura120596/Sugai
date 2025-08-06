@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.bus.FragmentBusAdd">
 
-    <ru.sugai.village.ui.components.AppEditText
+    <com.github.jura120596.molodec.ui.components.AppEditText
         android:id="@+id/etv_fragment_busAdd_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ru.sugai.village.ui.components.AppEditText
+    <com.github.jura120596.molodec.ui.components.AppEditText
         android:id="@+id/etv_fragment_busAdd_place"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etv_fragment_busAdd_title" />
 
-    <ru.sugai.village.ui.components.AppEditText
+    <com.github.jura120596.molodec.ui.components.AppEditText
         android:id="@+id/etv_fragment_busAdd_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etv_fragment_busAdd_place" />
 
-    <ru.sugai.village.ui.components.AppButton
+    <com.github.jura120596.molodec.ui.components.AppButton
         android:id="@+id/bt_fragment_busAdd"
         android:layout_width="match_parent"
         android:layout_height="32dp"

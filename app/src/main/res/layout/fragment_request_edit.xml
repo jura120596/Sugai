@@ -27,7 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ru.sugai.village.ui.components.AppEditText
+        <com.github.jura120596.molodec.ui.components.AppEditText
             android:id="@+id/type_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/type_tv" />
 
-        <ru.sugai.village.ui.components.AppButton
+        <com.github.jura120596.molodec.ui.components.AppButton
             android:id="@+id/bt_fragment_edit"
             android:layout_width="match_parent"
             android:layout_height="32dp"

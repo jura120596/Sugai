@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.Map.MapFragment">
 
-    <ru.sugai.village.ui.components.AppEditText
+    <com.github.jura120596.molodec.ui.components.AppEditText
         android:id="@+id/user_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -2,61 +2,95 @@ plugins {
     id 'com.android.application'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def yaKey = properties.getProperty('YandexAPIKey')
+def SP = properties.getProperty('SP')
+def SPWD = properties.getProperty('SPWD')
+def KPWD = properties.getProperty('KPWD')
+def SKEY = properties.getProperty('SKEY')
 android {
-    compileSdk 32
+    namespace = "com.github.jura120596.molodec"
+    compileSdk = 36
 
     defaultConfig {
-        applicationId "ru.sugai.village"
-        minSdk 24
-        targetSdk 30
-        versionCode 1
-        versionName "1.0"
+        applicationId "com.github.jura120596.molodec"
+        minSdk = 26
+        targetSdk  = 36
+        versionCode  = 4
+        versionName  = "2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        // This block is different from the one you use to link Gradle
+//        // to your CMake or ndk-build script.
+//        externalNativeBuild {
+//            // For ndk-build, instead use the ndkBuild block.
+//            cmake {
+//                // Passes optional arguments to CMake.
+//                arguments "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+//            }
+//        }
+    }
+    signingConfigs{
+        release {
+            keyAlias SKEY
+            keyPassword KPWD
+            storeFile file('../../'+SP)
+            storePassword SPWD
+        }
     }
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled = true
+            shrinkResources = true
+            debuggable = false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+        debug {
+            minifyEnabled = true
+            shrinkResources = true
+            debuggable = true
+            signingConfig = signingConfigs.release
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
     buildTypes.each{
-        it.buildConfigField 'String', 'YandexAPIKey', YandexAPIKey
-
+        it.buildConfigField 'String', 'YandexAPIKey', yaKey
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures {
-        viewBinding true
+        viewBinding = true
+        buildConfig = true
     }
 }
 
 dependencies {
 
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.6.1'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    androidTestImplementation(libs.espresso.core)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    implementation(libs.constraintlayout)
+    implementation(libs.activity)
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation 'androidx.navigation:navigation-fragment:2.5.1'
     implementation 'androidx.navigation:navigation-ui:2.5.1'
     implementation 'androidx.annotation:annotation:1.2.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
 
-    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
 
 
-    implementation 'com.yandex.android:maps.mobile:4.1.0-lite'
+    implementation 'com.yandex.android:maps.mobile:4.18.0-lite'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation"androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
-
 }

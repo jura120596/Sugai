@@ -57,7 +57,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/news_content_date" />
 
-    <ru.sugai.village.ui.components.ViewPagerCarouselView
+    <com.github.jura120596.molodec.ui.components.ViewPagerCarouselView
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

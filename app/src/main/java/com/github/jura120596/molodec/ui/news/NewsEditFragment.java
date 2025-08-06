@@ -113,13 +113,19 @@ public class NewsEditFragment extends Fragment {
         addimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                String perm = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    perm = Manifest.permission.READ_MEDIA_IMAGES;
+                } else {
+                    perm = Manifest.permission.READ_EXTERNAL_STORAGE;
+                }
+                if (ContextCompat.checkSelfPermission(getContext(), perm) == PackageManager.PERMISSION_GRANTED) {
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     startActivityForResult(intent, PHOTO_REQUEST_CODE);
                 } else {
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{perm}, 1);
                 }
             }
         });
@@ -147,7 +153,7 @@ public class NewsEditFragment extends Fragment {
                             viewPager.setVisibility(View.VISIBLE);
                             viewPager.setCurrentItem(Math.min(viewPager.getCurrentItem(), item.getPhotos().size() - 1));
                             Toast.makeText(getContext(), "Фото удалено", Toast.LENGTH_SHORT).show();
-                            if (item.getPhotos().size() == 0) {
+                            if (item.getPhotos().isEmpty()) {
                                 viewPager.setVisibility(View.GONE);
                             }
                         } else onError();
@@ -193,7 +199,7 @@ public class NewsEditFragment extends Fragment {
     }
 
     private void updateUiPhotos() {
-        if (item.getPhotos().size() > 0) {
+        if (!item.getPhotos().isEmpty()) {
             item.initAdapter(getContext());
             viewPager.setAdapter(item.getAdapter());
             viewPager.setVisibility(View.VISIBLE);

@@ -1,11 +1,11 @@
-package ru.sugai.village;
+package com.github.jura120596.molodec;
 
 import android.app.Application;
 
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
-public class SugaiApp  extends Application {
+public class CustomApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();

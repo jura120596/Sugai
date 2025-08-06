@@ -19,3 +19,12 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontwarn org.conscrypt.Conscrypt
+-dontwarn org.conscrypt.OpenSSLProvider
+-keep class retrofit2.** { *; }
+-keepattributes *Annotation*
+-keep class com.squareup.okhttp.** { *; }
+-keep interface com.squareup.okhttp.** { *; }
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-keep class com.github.jura120596.molodec.** { *; }

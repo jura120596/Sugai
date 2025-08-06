@@ -78,7 +78,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ru.sugai.village.ui.components.AppButton
+    <com.github.jura120596.molodec.ui.components.AppButton
         android:id="@+id/saveBtn"
         android:layout_width="match_parent"
         android:layout_height="32dp"

@@ -60,6 +60,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_history_points"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/bus_place" />
+        />
+<!--        app:layout_constraintStart_toStartOf="@+id/bus_place"-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

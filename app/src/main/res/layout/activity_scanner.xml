@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ru.sugai.village.ui.components.GifView
+    <com.github.jura120596.molodec.ui.components.GifView
         android:id="@+id/gif"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
