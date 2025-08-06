@@ -22,6 +22,7 @@ import com.github.jura120596.molodec.data.database.DataBASE;
 import com.github.jura120596.molodec.retrofit.Retrofit;
 import com.github.jura120596.molodec.retrofit.responses.ObjectResponse;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
@@ -40,17 +41,6 @@ public class UserProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_user, container, false);
 
-        String url = CONST.SERVER_URl + "/storage/" + DataBASE.user.getQr();
-        qrCode = view.findViewById(R.id.iv_prof_QrCode);
-        Picasso.get().load(url)
-                .placeholder(R.drawable.ic_person)
-                .into(qrCode);
-        DisplayMetrics dm = new DisplayMetrics();
-        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(dm);
-//        qrCode.setMinimumWidth(dm.widthPixels * 3 / 4);
-//        qrCode.setMaxWidth(dm.widthPixels * 3 / 4);
-//        qrCode.setMinimumHeight(dm.widthPixels * 3 / 4);
-//        qrCode.setMaxHeight(dm.widthPixels * 3 / 4);
         tl = view.findViewById(R.id.table);
 
         editBt = view.findViewById(R.id.floatBt_editProf);
@@ -110,6 +100,22 @@ public class UserProfileFragment extends Fragment {
         viewById7.setMaxWidth(tl.getWidth() - label.getWidth());
         viewById9.setMaxWidth(tl.getWidth() - label.getWidth());
         viewById10.setMaxWidth(tl.getWidth() - label.getWidth());
+
+        String url = CONST.SERVER_URl + "/storage/" + user.getQr();
+        qrCode = view.findViewById(R.id.iv_prof_QrCode);
+
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int size = dm.widthPixels * 3 / 4;
+        qrCode.setMinimumWidth(size);
+        qrCode.setMaxWidth(size);
+        qrCode.setMinimumHeight(size);
+        qrCode.setMaxHeight(size);
+        Picasso.get().load(url)
+                .placeholder(R.drawable.ic_person)
+                .error(R.drawable.icon)
+                .networkPolicy(NetworkPolicy.NO_STORE)
+                .into(qrCode);
     }
 
     @Override

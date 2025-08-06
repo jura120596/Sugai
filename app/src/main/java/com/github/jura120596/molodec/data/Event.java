@@ -94,7 +94,9 @@ public class Event implements Comparable<Event> {
                     Date c = sdf.parse(e.getDate());
                     long now = (new Date()).getTime();
                     long eventTime = c.getTime();
-                    return eventTime < (now) && eventTime + 7200000 > now;
+
+                    long diff = now-eventTime;
+                    return diff > 1800000;
                 } catch (ParseException ex) {
                     ex.printStackTrace();
                 }
@@ -130,21 +132,21 @@ public class Event implements Comparable<Event> {
         this.points = points;
     }
 
-    public Map<String, String> addParticipant(Context context, String participant_card_id) {
+    public Map<String, String> addParticipantPoint(Context context, String participant_card_id) {
         Map<String, String> e = new HashMap<>();
         e.put("participant_card_id", participant_card_id.trim());
-        addParticipant(context, e);
+        addParticipantPoint(context, e);
         return e;
     }
 
-    public Map<String, String> addParticipant(Context context, Integer participant_id) {
+    public Map<String, String> addParticipantPoint(Context context, Integer participant_id) {
         Map<String, String> e = new HashMap<>();
         e.put("participant_id", participant_id == null ? "0" : participant_id + "");
-        addParticipant(context, e);
+        addParticipantPoint(context, e);
         return e;
     }
 
-    public void addParticipant(Context context, Map<String, String> map) {
+    public void addParticipantPoint(Context context, Map<String, String> map) {
         Call<ResponseBody> addPointsNFC = Retrofit.getInstance().getApi().addEventParticipant("Bearer " + DataBASE.token, getId(), map);
         addPointsNFC.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -165,6 +167,33 @@ public class Event implements Comparable<Event> {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 t.printStackTrace();
                 Toast.makeText(context, "Метка не поддерживается", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    
+    public void registerParticipant(Context context){
+        Map<String, String> map = new HashMap<>();
+        map.put("village_event_id", getId()+"");
+        Call<ResponseBody> call = Retrofit.getInstance().getApi().editProfile("Bearer " + DataBASE.token, map);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (!response.isSuccessful()) {
+                    try {
+                        Log.d(CONST.SERVER_LOG, "Register Participant " + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(context, "Не удалось записаться на мероприятие", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(context, "Вы записались на мероприятие", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(context, "Непредвиденная ошибка", Toast.LENGTH_SHORT).show();
             }
         });
     }

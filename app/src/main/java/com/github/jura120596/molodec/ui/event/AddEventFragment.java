@@ -189,7 +189,7 @@ public class AddEventFragment extends Fragment {
         }
         if (resultCode == 1) {
             if (card == null || card.isEmpty()) error();
-            else event.addParticipant(getActivity(), card);
+            else event.addParticipantPoint(getActivity(), card);
             System.out.println(card);
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -200,7 +200,7 @@ public class AddEventFragment extends Fragment {
         if (result.getContents() == null) return;
         try {
             System.out.println(result.getContents());
-            event.addParticipant(getActivity(), Integer.parseInt(result.getContents()));
+            event.addParticipantPoint(getActivity(), Integer.parseInt(result.getContents()));
         } catch (Throwable t) {
             t.printStackTrace();
             error();

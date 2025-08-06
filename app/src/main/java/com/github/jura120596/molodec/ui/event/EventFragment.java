@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -27,6 +28,7 @@ import com.github.jura120596.molodec.data.database.DataBASE;
 import com.github.jura120596.molodec.helpers.LastItemListener;
 import com.github.jura120596.molodec.helpers.SwipeHelper;
 import com.github.jura120596.molodec.retrofit.Retrofit;
+import com.github.jura120596.molodec.ui.User.UsersListFragment;
 import com.github.jura120596.molodec.ui.components.AppButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -63,16 +65,16 @@ public class EventFragment extends AddEventFragment {
                 Bundle bundle = new Bundle();
                 bundle.putInt("pos", position);
                 fragment.setArguments(bundle);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_content_main, fragment).addToBackStack(null);
-                fragmentTransaction.commit();
+                changeFragment(fragment);
             }
 
             @Override
             public void onAddPeople(int position) {
                 addPeople(position);
             }
+
+            @Override
+            public void joinToEvent(int position) {EventFragment.this.joinToEvent(DataBASE.EVENT_JSON_LIST.get(position));}
         });
         recyclerView.setAdapter(adapter);
         recyclerView.setBackgroundColor(Color.WHITE);
@@ -82,10 +84,7 @@ public class EventFragment extends AddEventFragment {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.nav_host_fragment_content_main, new AddEventFragment()).addToBackStack(null);
-                fragmentTransaction.commit();
+                changeFragment(new AddEventFragment());
             }
         });
         addBtn.setVisibility(DataBASE.user.isAdmin() ? View.VISIBLE : View.GONE);
@@ -124,6 +123,16 @@ public class EventFragment extends AddEventFragment {
         return view;
     }
 
+    private void changeFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, fragment).addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    private void joinToEvent(Event event) {
+        if (event != null) event.registerParticipant(getContext());
+    }
     private void addPeople(int position) {
         LayoutInflater inflater = ((AppCompatActivity) getContext()).getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -138,6 +147,15 @@ public class EventFragment extends AddEventFragment {
         dialoglayout.addView(qr);
         ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) qr.getLayoutParams();
         lp.topMargin = 20;
+        AppButton list = new AppButton(getContext());
+        list.setOnClickListener((v) -> {
+            changeFragment(new UsersListFragment(DataBASE.EVENT_JSON_LIST.get(position)));
+            dialog.cancel();
+        });
+        list.setText("Список участников");
+        dialoglayout.addView(list);
+        ViewGroup.MarginLayoutParams lp2 = (ViewGroup.MarginLayoutParams) list.getLayoutParams();
+        lp2.topMargin = 20;
         builder.setView(dialoglayout);
         builder.setTitle("Добавление участника");
         builder.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {

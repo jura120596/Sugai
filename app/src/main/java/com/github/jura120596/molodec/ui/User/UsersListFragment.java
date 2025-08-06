@@ -21,11 +21,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.github.jura120596.molodec.CONST.CONST;
 import com.github.jura120596.molodec.R;
 import com.github.jura120596.molodec.adapter.AdapterUserList;
+import com.github.jura120596.molodec.data.Event;
 import com.github.jura120596.molodec.data.ServerListResponse;
 import com.github.jura120596.molodec.data.User;
 import com.github.jura120596.molodec.data.database.DataBASE;
 import com.github.jura120596.molodec.retrofit.Retrofit;
 import com.github.jura120596.molodec.ui.components.AppEditText;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +37,7 @@ import retrofit2.Response;
 
 public class UsersListFragment extends Fragment {
 
+    private Event event = null;
     AdapterUserList adapterUserList ;
     RecyclerView recyclerView;
     AppEditText search;
@@ -40,6 +45,11 @@ public class UsersListFragment extends Fragment {
     Handler handler;
     int page = 0;
     int last_page = 0;
+
+    public UsersListFragment() {}
+    public UsersListFragment(Event event) {
+        this.event = event;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,6 +73,7 @@ public class UsersListFragment extends Fragment {
 
             @Override
             public void onItemLongClick(int position, View v) {
+                if (event != null) return;
                 UserEditFragment fragment = new UserEditFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt("pos",position);
@@ -129,7 +140,11 @@ public class UsersListFragment extends Fragment {
     }
     private void getUsers(int page){
         if (last_page > 0 && last_page < page) return;
-        Call<ServerListResponse<User>> getUsers = Retrofit.getInstance().getApi().getUsers("Bearer "+ DataBASE.token, search.getText());
+
+        Map<String, String> map = new HashMap<>();
+        if (!search.getText().isEmpty()) map.put("name", search.getText());
+        if (event != null) map.put("village_event_id", "" + event.getId());
+        Call<ServerListResponse<User>> getUsers = Retrofit.getInstance().getApi().getUsers("Bearer "+ DataBASE.token,map);
         if(swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(true);
         getUsers.enqueue(new Callback<ServerListResponse<User>>() {
             @Override

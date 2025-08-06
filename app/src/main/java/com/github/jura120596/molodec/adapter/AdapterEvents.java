@@ -1,8 +1,10 @@
 package com.github.jura120596.molodec.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,12 +19,14 @@ import com.github.jura120596.molodec.helpers.LastItemListener;
 public class AdapterEvents extends RecyclerView.Adapter {
     public onEventClickListener clickListener;
     public LastItemListener lastItemListener;
+    private Context context;
 
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_event,parent,false);
+        context = parent.getContext();
+        View view = LayoutInflater.from(context).inflate(R.layout.item_event,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -38,6 +42,7 @@ public class AdapterEvents extends RecyclerView.Adapter {
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
         TextView dateTv, placeTv, titleTv, pointsTv;
+        Button joinBtn;
         ConstraintLayout addPeopleBtn;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -46,6 +51,7 @@ public class AdapterEvents extends RecyclerView.Adapter {
             placeTv = itemView.findViewById(R.id.tv_event_content);
             titleTv = itemView.findViewById(R.id.tv_event_title);
             pointsTv = itemView.findViewById(R.id.tv_event_points);
+            joinBtn = itemView.findViewById(R.id.bt_participant);
             if (DataBASE.user.isAdmin()) {
                 itemView.setOnLongClickListener(this);
                 itemView.setOnClickListener(this);
@@ -59,7 +65,10 @@ public class AdapterEvents extends RecyclerView.Adapter {
             pointsTv.setText(""+event.getPoints());
             titleTv.setText(""+event.getTitle());
             addPeopleBtn.setOnClickListener(view -> clickListener.onAddPeople(position));
-            addPeopleBtn.setVisibility(Event.canAddParticipant(event )&& (DataBASE.user.isAdmin() || DataBASE.user.isCurator()) ? View.VISIBLE : View.GONE);
+            joinBtn.setOnClickListener(view -> clickListener.joinToEvent(position));
+            boolean halfHour = Event.canAddParticipant(event);
+            addPeopleBtn.setVisibility(halfHour && (DataBASE.user.isAdmin() || DataBASE.user.isCurator()) ? View.VISIBLE : View.GONE);
+            joinBtn.setVisibility(halfHour ? View.INVISIBLE : View.VISIBLE);
         }
 
         @Override
@@ -86,5 +95,6 @@ public class AdapterEvents extends RecyclerView.Adapter {
         public abstract void onItemClick(int position, View view);
         public void onItemLongClick(int position,View view) {};
         public void onAddPeople(int position) {};
+        public void joinToEvent(int position) {};
     }
 }

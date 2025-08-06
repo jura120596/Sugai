@@ -38,6 +38,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface Api {
 
@@ -241,7 +242,11 @@ public interface Api {
 
     @PUT("api/auth/profile")
     @Headers({"Accept: application/json"})
-    Call<ResponseBody> editProfile(@Header("Authorization") String token,@Body User user);
+    Call<ResponseBody> editProfile(@Header("Authorization") String token, @Body User user);
+
+    @PUT("api/auth/profile")
+    @Headers({"Accept: application/json"})
+    Call<ResponseBody> editProfile(@Header("Authorization") String token, @Body Map<String,String> body);
 
 
     @Headers({"Accept: application/json"})
@@ -251,7 +256,8 @@ public interface Api {
     @GET("api/user")
     Call<ServerListResponse<User>> getUsers(@Header("Authorization") String heder);
     @GET("api/user")
-    Call<ServerListResponse<User>> getUsers(@Header("Authorization") String heder, @Query("name") String name);
+    @Headers({"Accept: application/json"})
+    Call<ServerListResponse<User>> getUsers(@Header("Authorization") String token, @QueryMap Map<String,String> body);
 
 
     @GET("api/event")

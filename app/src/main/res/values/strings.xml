@@ -65,4 +65,5 @@
     <string name="balance_title">Баланс</string>
     <string name="comment_tittle">Комментарий администрации:</string>
     <string name="add_post_photo">Добавить фото</string>
+    <string name="add_participant">Записаться</string>
 </resources>
